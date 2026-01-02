@@ -21,7 +21,9 @@ item* binary_search(item* items, size_t size, const char* key) {
     size_t low = 0;
     size_t high = size;
     while (low < high) {
-        size_t mid = (low + high) / 2;
+        // size_t mid = (low + high) / 2; - this here contains bug
+        // https://research.google/blog/extra-extra-read-all-about-it-nearly-all-binary-searches-and-mergesorts-are-broken/
+        size_t mid = ((unsigned int)low + (unsigned int)high) >> 1;
         int c = strcmp(items[mid].key, key);
         if (c == 0) {
             return &items[mid];
@@ -39,13 +41,11 @@ item* binary_search(item* items, size_t size, const char* key) {
 
 int main(int argc, char *argv[]) {
     item items[] = {
-        {"foo", 10}, {"bar", 42}, {"bazz", 36}, {"buzz", 7},
-        {"bob", 11}, {"jane", 100}, {"x", 200}
-    };
-
+        {"bar", 42}, {"bazz", 36}, {"bob", 11}, {"buzz", 7},
+        {"foo", 10}, {"jane", 100}, {"x", 200}};
     size_t num_items = sizeof(items) / sizeof(item);
 
-    item key = {"foo", 10};
+    item key = {"bob", 10};
     item* found = bsearch(&key, items, num_items, sizeof(item), cmp);
     if (found == NULL) {
         printf("not found\n");
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 
     printf("bsearch: value of 'bob' is %d\n", found->value);
 
-    found = binary_search(items, num_items, "foo");
+    found = binary_search(items, num_items, "bob");
     if (found == NULL) {
         printf("not found\n");
         return 1;
