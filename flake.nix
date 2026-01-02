@@ -19,6 +19,7 @@
               clang
               glibc.dev
               clang-tools
+              gdb
             ];
 
             nativeBuildInputs = with pkgs; [
