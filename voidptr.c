@@ -33,10 +33,12 @@ int main(void) {
     printf("this is end end\n");
     some_t* somethingmore = some_t_return();
     printf("%d\n", somethingmore->data);
+
     int *something_int = return_int();
     printf("this is int : %d\n", *something_int);
-    printf("this is end end\n");
+
     free(something_int);
     free(somethingmore);
+
     return 0;
 }
