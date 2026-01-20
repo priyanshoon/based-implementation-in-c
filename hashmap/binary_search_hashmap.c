@@ -63,3 +63,9 @@ int main(int argc, char *argv[]) {
     printf("binary_search: value of 'bob' is %d\n", found->value);
     return 0;
 }
+
+/*
+ * if (n % 2 == 0) return even
+ * else return odd
+ * n & 1
+ */
